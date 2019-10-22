@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -41,10 +43,10 @@ public class BookServiceTest {
     {
         Book book=new Book();
         book.setBookid(1);
-        book.setTitle("Yaman");
+        book.setTitle("Yama");
         Mockito.when(bookRepository.findAll()).thenReturn(Arrays.asList(book));
-        String b= bookService.add(book);
-        Assert.assertEquals("ADDED SUCCESSFULLY",b);
+        ResponseEntity<List<Book>> b= bookService.add(book);
+        Assert.assertEquals(new ResponseEntity<>(Arrays.asList(book), HttpStatus.OK),b);
     }
     @Test
     public void find()
